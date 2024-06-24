@@ -1,0 +1,77 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Procesos {% endblock %}
+
+{% block body %}
+
+{% load static %}
+
+<div class="row" style="padding:30px ;">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body" style="padding:30px ;">
+                <h5 style="color: gray;">REGISTRO DE PROCESOS</h5><br>
+                <form id="Form_Nuevo_Servicio" action="{% url 'Nuevo_Proceso' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group py-1">
+                        <input type="text" name="txtNombre" id="txtNombre" class="form-control"  
+                            required>
+                    </div><br>
+                    <div class="col-13">
+                        <button class="btn btn-info fw-bold float-end" type="submit">REGISTRAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-8 ">
+        <div class="card">
+            <div  style="padding: 20px;">
+                <h4 style="color: gray; text-align: center;">Lista de Procesos</h4>
+                <table class="table table-border table-hover;" style="font-size: 14px;">
+                    <thead style="background-color:#1a3653; color: white;">
+                        <tr>
+                            <th> NOMBRE </th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                            <th> </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proceso in procesos %}
+                        <tr>
+                            <td>{{proceso.Nombre}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="{% url 'Form-Editar-Proceso' proceso.Id %}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{% url 'Form-Eliminar-Proceso' proceso.Id %}"  class="btn btn-secondary"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src='{% static "js/Perfil.js" %}'> </script>
+                {% if messages %}
+                {% for m in messages %}
+                <script>
+                    Swal.fire({
+                        "title": "{{m}} ",
+                        "icon": "success",
+                    })
+
+                </script>
+                {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

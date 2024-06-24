@@ -1,0 +1,89 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Usuarios {% endblock %}
+
+{% load static %}
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+  Swal.fire({
+    "title": "{{m}} ",
+    "icon": "success",
+  })
+</script>
+{% endfor %}
+{% endif %}
+
+
+<h5 style="color: gray;text-align: center;">Listado de usuarios</h5>
+<button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+  <a class="nav-link active" href="{% url 'FormNuevo_Usuario' %}">Nuevo <i class="bi bi-person-plus-fill"></i></a>
+</button>
+
+  <div style="display: flex;float: right;margin: 10px; ">
+    {% block buscador %} 
+  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+    method="POST">
+    {% csrf_token %}
+    <div class="input-group">
+      <input  type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" id="buscar">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit" >
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+  {% endblock buscador %}
+</div>
+<hr>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-border table-hover;" style="font-size: 14px; ">
+          <thead style="background-color:#1a3653; color: white;">
+            <tr>
+              <th scope="col">Cedula</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">Fecha Nacimiento</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Perfil</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Salario</th>
+              <th scope="col">Banco</th>
+              <th scope="col">Numero Cuenta</th>
+              <th scope="col">Fecha Registro</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="usuarios" >
+            {% for usuario in usuarios %}
+            <tr>
+              <td>{{usuario.Documento}}</td>
+              <td>{{usuario.first_name}}</td>
+              <td>{{usuario.last_name}}</td>
+              <td>{{usuario.Fecha_nacimiento|date:"Y-m-d"}}</td>
+              <td>{{usuario.Telefono}}</td>
+              <td>{{usuario.Perfil}}</td>
+              <td style="background-color: rgb(233, 224, 224);">{{usuario.username}}</td>
+              <td>${{usuario.Salario}}</td>
+              <td>{{usuario.Banco}}</td>
+              <td>{{usuario.Numero_cuenta}}</td>
+              <td>{{usuario.created|date:"Y-m-d"}}</td>
+              <td><a href="{% url 'Form_Detalle_EdicionU' usuario.Id %}" class="btn btn-secondary"><i
+                    class="bi bi-pencil-square"></i></a></td>
+              <td><a href="{% url 'Form_Detalle_EliminacionU' usuario.Id %}" class="btn btn-secondary"><i
+                    class="bi bi-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <script src='{% static "js/Usuarios.js" %}'> </script>
+      </div>
+    </div>
+  </div>
+{% endblock %}

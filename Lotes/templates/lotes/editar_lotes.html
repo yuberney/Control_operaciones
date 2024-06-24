@@ -1,0 +1,65 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Actualizar Lotes {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">ACTUALIZAR
+                    LOTE</div>
+                <hr>
+                <form action="{% url 'Editar-Lote' %}" method="POST"class="row g-2 needs-validation" novalidate >
+                    {% csrf_token %}
+
+                    <input type="" value="{{lotes.Id}}" name="Id" id="Id" class="form-control" >
+                    <div class="col-md-3">
+                        <label for="" style="color: gray;">Cliente</label>
+                        <select type="text" name="txtCliente" id="txtCliente" class="form-control"  required>
+                            <option  value="{{lotes.Cliente.Id}}">{{lotes.Cliente}}</option>
+                            {% for cliente in clientes %}
+                            <option value="{{cliente.Id}}">{{cliente.Nombre_Empresa}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="txtReferencia" style="color: gray;">Referencia</label>
+                        <input value="{{lotes.Referencia}}" type="text" name="txtReferencia" id="txtReferencia" class="form-control"  required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="txtNombre" style="color: gray;">Descripcion</label>
+                        <input type="text" value="{{lotes.Descripcion}}" name="txtDescripcion" id="txtDescripcion" class="form-control" >
+                    </div><br>
+                
+                    <div class="col-md-3">
+                        <label for="txtCantidad_Resgistrada" style="color: gray;">Cantidad Registrada</label>
+                        <input type="text" value="{{lotes.Cantidad_Registrada}}" name="txtCantidad_Resgistrada" id="txtCantidad_Resgistrada" class="form-control" required>
+                    </div>
+           
+                    <div class="col-md-2">
+                        <label for="txtPrecio" style="color: gray;">Fecha de Ingreso</label>
+                        <input type="date" value="{{lotes.FechaIngreso|date:"Y-m-d"}}" name="txtFechaIngreso" id="txtFechaIngreso" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="txtPrecio" style="color: gray;">Fecha de Salida</label>
+                        <input type="date" value="{{lotes.FechaSalida|date:"Y-m-d"}}" name="txtFechaSalida" id="txtFechaSalida" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="txtPrecio" style="color: gray;">Fecha Real de Entrega</label>
+                        <input type="date" value="{{lotes.FechaEntregado|date:"Y-m-d"}}"  name="txtFechaEntregado" id="txtFechaEntregado" class="form-control" required placeholder="">
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-info fw-bold float-end" type="submit">ACTUALIZAR</button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Completar Lote {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">COMPLETAR
+                    LOTE</div>
+                <hr>
+                <form action="{% url 'Completar-Lote' %}" method="POST"class="row g-2 needs-validation" novalidate >
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{lotes.Id}}" name="Id" id="Id" class="form-control" >
+                    <div class="col-md-3">
+                     
+                    </div>
+                    <div class="col-md-3">
+                        <label for="txtReferencia" style="color: gray;">Referencia</label>
+                        <input value="{{lotes.Referencia}}" type="text" name="txtReferencia" id="txtReferencia" class="form-control"  required>
+                    </div>
+                 
+                    <div class="col-md-2">
+                        <label for="txtPrecio" style="color: gray;">Fecha Real de Entrega</label>
+                        <input type="date" value="{{lotes.FechaEntregado|date:"Y-m-d"}}"  name="txtFechaEntregado" id="txtFechaEntregado" class="form-control" required placeholder="">
+                    </div>
+                
+                    <div class="col-12">
+                        <button class="btn btn-info fw-bold float-end" type="submit">COMPLETAR ORDEN</button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

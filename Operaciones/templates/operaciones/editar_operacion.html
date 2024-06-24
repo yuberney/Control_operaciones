@@ -1,0 +1,68 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Actualizar Operaciones {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">ACTUALIZAR
+                    OPERACION</div>
+                <hr>
+                <form action="{% url 'Editar_Operacion' %}" method="POST" class="row g-2 needs-validation">
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{operacion.Id}}" name="Id" id="Id" class="form-control"
+                         required>
+
+                         <div class="col-md-2">
+                            <label style="color: gray;">FECHA DE REGISTRO</label>
+                            <input type="text" value="{{operacion.FechaRegistro|date:"Y-m-d"}}" name="txtFecha" id="txtFecha"
+                                class="form-control" >
+                        </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">REFERENCIA</label>
+                        <select type="" value="" name="txReferencia" id="txReferencia"
+                            class="form-control"  required>
+                            <option value="{{operacion.Lote.Id}}">{{operacion.Lote}}</option>
+                            {% for lote in lotes %}
+                            <option value="{{lote.Id}}">{{lote.Referencia}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                 
+                    <div class="col-md-2">
+                        <label style="color: gray;">TIPO DE OPERACION</label>
+                       <select type="text" value="" name="txtTipoOperacion" id="txtTipoOperacion" class="form-control" >
+                        <option value="{{operacion.Proceso.Id}}">{{operacion.Proceso}}</option>
+                        {% for proceso in procesos %}
+                        <option value="{{proceso.Id}}">{{proceso.Nombre}}</option>
+                        {% endfor %}
+                       </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">PRECIO OPERACION</label>
+                        <input type="text" value="{{operacion.NumeroOperacionnes}}" name="txtNumeroOperacionnes" id="txtNumeroOperacionnes"
+                            class="form-control" >
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">PRECIO OPERACION</label>
+                        <input type="text" value="{{operacion.Precio}}" name="txtPrecio" id="txtPrecio"
+                            class="form-control" >
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-info fw-bold float-end" type="submit">ACTUALIZAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

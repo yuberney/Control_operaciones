@@ -1,0 +1,59 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Procesos de Operaciones {% endblock %}
+
+{% block body %}
+{% load static %}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">  
+            <div class="shadow-lg p-3 mb-5 mt-4">
+                 <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">REGISTRO NUEVO PROCESO</div>
+                <form action="{% url 'Nuevo_Proceso_Operacion' %}" method="POST" class="row g-2 needs-validation" >
+                    {% csrf_token %}
+                   
+                    <div class="col-md-2">
+                   
+                    <label style="color: gray;">Disponibles</label>
+                    <input type="text" value="{{k.Pendientes}}" name="disponible" id="disponible" class="form-control"  >
+                   
+                           
+                    
+                    </div>
+                    <div class="col-md-2">
+                        <label style="color: gray;">Ingrese Cantidad </label>
+                        <input type="number" name="txtCantidad_Procesada"  id="txtCantidad_Procesada"class="form-control" required>
+                    </div>
+                   
+                    <div class="col-md-2">
+                        <label style="color: gray;">Referencia</label>
+                        <input type="" value="{{operacion.Id}}" name="txtReferencia" id="txtReferencia" class="form-control" readonly>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">Fecha</label>
+                        <input type="date" value="" name="txtFecha" id="txtFecha" class="form-control" >
+                    </div>
+                  
+                    <br>
+                    <div class="col-12">
+                        <button id="registrar" class="btn btn-info fw-bold float-end" type="submit" hi>REGISTRAR</button>
+                    </div>
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<script src='{% static "js/Proceso_Operacion.js" %}'> </script>
+<script src='{% static "js/Crear_Proceso_Operacion.js" %}'> </script>
+    
+
+{% endblock %}

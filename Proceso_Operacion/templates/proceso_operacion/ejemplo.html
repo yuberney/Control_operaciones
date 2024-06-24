@@ -1,0 +1,90 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Proceso Operaciones {% endblock %}
+
+{% load static %}
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+  Swal.fire({
+    "title": "{{m}} ",
+    "icon": "success",
+  })
+</script>
+{% endfor %}
+{% endif %}
+
+
+<h5 style="color: gray;text-align: center;">Proceso pendientes por Pagar</h5>
+
+<hr>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <table id="Proceso_Operaciones" class="table table-border table-hover;" style="font-size: 14px;width: 100%; text-align: center;">
+            <thead style="background-color:#1a3653; color: white; ">
+                <tr>
+                    <th >Fecha Registro
+                      
+                    </th>
+                    <th >Empleado
+                      
+                    </th>
+                    <th >Referencia
+                       
+                    </th>
+                    <th >Operacion
+                        
+                    </th>
+                    <th>Procesado</th>
+                    <th>Valor Operacion</th>
+                    <th>Total Operacion</th>
+                    <th>Estado</th>
+                  
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-Proceso_Operaciones">
+                {% for pendiente_Pagar in pendiente_Pagar %}
+        
+                <tr>
+                    <td>{{pendiente_Pagar.FechaRegistro}}</td>
+                    <td>{{pendiente_Pagar.Usuario}}</td>
+                    <td>{{pendiente_Pagar.Referencia}}</td>
+                    <td>{{pendiente_Pagar.Referencia.Proceso}}</td>
+                    <td>{{pendiente_Pagar.Cantidad_Procesada}}</td>
+                    <td>{{pendiente_Pagar.Referencia.Precio}}</td>
+                    <td>{{pendiente_Pagar.valorTotalProcesado}}</td>
+                    <td>{{pendiente_Pagar.Estado}}</td> 
+                   
+                    <td>
+                        <a href="" style="font-size: 12px;" class="btn btn-secondary"><i class="bi bi-trash"></i></a>
+                        <a href="" style="font-size: 12px;" class="btn btn-secondary"><i class="bi bi-pencil"></i></a>
+                        <a href="{% url 'Form-Nuevo-Pago' pendiente_Pagar.Usuario.Id %}" style="font-size: 12px;" class="btn btn-secondary">Pagar</a>
+                    
+                    </td>
+                   
+                </tr>
+                {% endfor %}
+               
+            </tbody>
+         <tfoot>
+            <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total $</td>
+                <td id="tdTotal">0</td>
+            </tr>
+         </tfoot>
+        </table>
+        <script src='{% static "js/Pagos.js" %}'> </script>
+      </div>
+    </div>
+  </div>
+{% endblock %}

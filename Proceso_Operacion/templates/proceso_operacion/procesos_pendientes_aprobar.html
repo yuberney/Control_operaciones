@@ -1,0 +1,100 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Proceso Operaciones {% endblock %}
+
+{% load static %}
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+  Swal.fire({
+    "title": "{{m}} ",
+    "icon": "success",
+  })
+</script>
+{% endfor %}
+{% endif %}
+
+
+<button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+    <a class="nav-link active" href="{% url 'Operaciones_Liquidadas' %}">Procesos Pendientes Liquidar</a>
+  </button>
+<h5 style="color: gray;text-align: center;">Proceso Pendientes de Aprobar</h5>
+
+<hr>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <table id="Proceso_Operaciones" class="table table-border table-hover;" style="font-size: 14px;width: 100%; text-align: center;">
+            <thead style="background-color:#1a3653; color: white; ">
+                <tr>
+                    <th col-index = 1>Fecha Registro
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index = 2>Empleado
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index = 3>Referencia
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index = 4>Operacion
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th>Procesado</th>
+                    <th>Valor Operacion</th>
+                    <th>Total Operacion</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-Proceso_Operaciones">
+                {% for proceso in procesoOperacion %}
+        
+                <tr>
+                    <td>{{proceso.FechaRegistro}}</td>
+                    <td>{{proceso.Usuario}}</td>
+                    <td>{{proceso.Referencia}}</td>
+                    <td>{{proceso.Referencia.Proceso}}</td>
+                    <td>{{proceso.Cantidad_Procesada}}</td>
+                    <td>{{proceso.Referencia.Precio}}</td>
+                    <td>{{proceso.valorTotalProcesado}}</td>
+                    <td>
+                        <a href="{% url 'Form_Eliminar_Proceso_Operaciones' proceso.Id %}" style="font-size: 12px;" class="btn btn-secondary"><i class="bi bi-trash"></i></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'Form_Edicion_Procesos_Operaciones' proceso.Id %}" style="font-size: 12px;" class="btn btn-secondary"><i class="bi bi-pencil"></i></a>
+                    </td>
+                    <td>
+                        <a href="{% url 'Liquidar_Proceso_Operacion' proceso.Id %}" class="btn btn-secondary" style="font-size: 12px;"> Aprobar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+               
+            </tbody>
+         <tfoot>
+            <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total $</td>
+                <td id="tdTotal">0</td>
+            </tr>
+         </tfoot>
+        </table>
+        <script src='{% static "js/Proceso_Operacion.js" %}'> </script>
+      </div>
+    </div>
+  </div>
+{% endblock %}

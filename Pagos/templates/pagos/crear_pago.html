@@ -1,0 +1,106 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Procesos de Operaciones {% endblock %}
+
+{% block body %}
+{% load static %}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">  
+            <div class="shadow-lg p-3 mb-5 mt-4">
+                 <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">REGISTRO DE PAGOS</div>
+                <form action="{% url 'Nuevo_Proceso_Operacion' %}" method="POST" class="row g-2 needs-validation" >
+                    {% csrf_token %}
+            
+                    <div class="col-md-2">
+                        <label for="txtEmpleado" class="form-label" style="color: gray;">Empleado</label>
+                        <input type="hidden" value="{{us.id}}" name="txtEmpleado" id="txtEmpleado" class="form-control">
+                        <input type="text" value="{{us}}" name="nombreemp" id="nombreemp" class="form-control">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtValorProcesos" class="form-label" style="color: gray;">Valor
+                            Procesos</label>
+                        <input type="number" value="{{valpago}}" name="txtValorProcesos" id="txtValorProcesos"
+                            class="form-control" oninput="ValorTotal()">
+                    </div>
+                   
+                    <div class="col-md-2">
+                      
+                        <label for="txtValorP" class="form-label" style="color: gray;;">Otros Pagos</label>
+                         <input type="number" name="txtOtrosPagos" id="txtOtrosPagos" class="form-control"
+                        oninput="ValorTotal()">
+                      
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="txtValorD" class="form-label" style="color: gray;">Descuentos</label>
+                        <input type="number" name="txtDescuentos" id="txtDescuentos" class="form-control" step="any"
+                            oninput="ValorTotal()">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="Resultado" class="form-label" style="color: gray;">Valor a Pagar</label>
+                        <input type="number" name="txtValorPagar" id="txtValorPagar" class="form-control"
+                            placeholder="$" readonly>
+                    </div>
+                
+                    <div class="col-12">
+                        <button id="registrar" class="btn btn-info fw-bold float-end" type="submit" hi>REGISTRAR</button>
+                    </div>
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<script src='{% static "js/Proceso_Operacion.js" %}'> </script>
+<script >
+    // Constantes para el div contenedor de los inputs y el botón de agregar
+const contenedor = document.querySelector('#dinamic');
+const btnAgregar = document.querySelector('#agregar');
+
+// Variable para el total de elementos agregados
+let total = 1;
+
+/**
+ * Método que se ejecuta cuando se da clic al botón de agregar elementos
+ */
+btnAgregar.addEventListener('click', e => {
+    let div = document.createElement('div');
+    div.innerHTML = `<label type="hidden">${total++}</label> - <input type="text" name="nombre[]" placeholder="Nombre" required><button onclick="eliminar(this)">Eliminar</button>`;
+    contenedor.appendChild(div);
+})
+
+/**
+ * Método para eliminar el div contenedor del input
+ * @param {this} e 
+ */
+const eliminar = (e) => {
+    const divPadre = e.parentNode;
+    contenedor.removeChild(divPadre);
+    actualizarContador();
+};
+
+/**
+ * Método para actualizar el contador de los elementos agregados
+*/
+const actualizarContador = () => {
+    let divs = contenedor.children;
+    total = 1;
+    for (let i = 0; i < divs.length; i++) {
+        divs[i].children[0].innerHTML = total++;
+    }//end for
+};
+    </script>
+    
+
+{% endblock %}
+

@@ -1,0 +1,74 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Lotes Terminados{% endblock %}
+
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+    Swal.fire({
+        "title": "{{m}} ",
+        "icon": "success",
+    })
+</script>
+{% endfor %}
+{% endif %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    
+    <button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+        <a class="nav-link active" href="{% url 'Lista-Operaciones' %}">Operaciones Disponibles <i class="lni lni-layers"></i></a>
+    </button>
+ 
+    <div class="card">
+        <h3 style="color: gray; text-align: center;">Lotes Completados </h3>
+        <hr>
+        <table id="OperacionesDisponibles" class="table table-border table-hover;" style="font-size: 13.7px; text-align: center;">
+            <thead style="background-color:#1a3653; color: white;">
+                <tr>  
+                    <th>Lote N°</th>
+                    <th>Cliente</th>
+                    <th>Referencia</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad Registrada</th> 
+                    <th>Estado</th>
+                    <th></th>
+                    <th></th>
+                    <th colspan="4">Acciones</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for lote in lotes %}
+                
+                    <tr>
+                        <td>{{lote.Id}}</td>
+                        <td>{{lote.Cliente}}</td>
+                        <td><a href="{% url 'Filtro-Operaciones' lote.Id %}">{{lote.Referencia}}</a></td>
+                        <td>{{lote.Descripcion}}</td>
+                        <td>{{lote.Cantidad_Registrada}}</td>
+                        <td>{{lote.Estado}}</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a href="{% url 'formOperaciones' lote.Id %}" class="btn btn-secondary" style="font-size: 13px;">Restaurar</a>
+                            <a href="{% url 'detalle-Lotes' lote.Id %}" class="btn btn-link">Ver Detalles</a>
+                            
+                        </td>
+                     
+                    </tr>
+                  
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

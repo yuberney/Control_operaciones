@@ -1,0 +1,70 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %}Ediatr  Procesos de Operaciones {% endblock %}
+
+{% block body %}
+{% load static %}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">  
+            <div class="shadow-lg p-3 mb-5 mt-4">
+                 <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">EDITAR PROCESO OPERACION</div>
+                <form action="{% url 'Editar_Proceso_Operaciones'%}" method="POST" class="row g-2 needs-validation" >
+                    {% csrf_token %}
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">Id</label>
+                        <input type="" value="{{procesoOperacion.Id}}" name="Id" id="Id" class="form-control" >
+                    </div>
+                    <div class="col-md-2">
+                        <label style="color: gray;">Fecha</label>
+                        <input type="date" value="{{procesoOperacion.FechaRegistro|date:"Y-m-d"}}" name="txtFecha" id="txtFecha" class="form-control" >
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">Empleado</label>
+                        <select type="text" value="" name="txtEmpleado" id="txtEmpleado" class="form-control" >
+                            <option value="{{procesoOperacion.Usuario.Id}}">{{procesoOperacion.Usuario}}</option>
+                            {% for empleado in empleado %}
+                            <option value="{{empleado.Id}}">{{empleado.first_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label style="color: gray;">Referencia</label>
+                        <select type="" value="" name="txtReferencia" id="txtReferencia" class="form-control">
+                            <option value="{{procesoOperacion.Id}}">{{procesoOperacion.Referencia}}</option>
+                        </select>
+                    </div>
+                
+                    <div class="col-md-2">
+                        <label style="color: gray;">Ingrese Cantidad </label>
+                        <input type="number" value="{{procesoOperacion.Cantidad_Procesada}}" name="txtCantidad_Procesada"  id="txtCantidad_Procesada"class="form-control" required>
+                    </div>
+                   
+                   
+
+                   
+                  
+                    <br>
+                    <div class="col-12">
+                        <button id="registrar" class="btn btn-info fw-bold float-end" type="submit" hi>ACTUALIZAR</button>
+                    </div>
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<script src=''> </script>
+    
+
+{% endblock %}

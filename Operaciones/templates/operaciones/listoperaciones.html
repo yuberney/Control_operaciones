@@ -1,0 +1,76 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Operaciones Disponibles {% endblock %}
+
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+    Swal.fire({
+        "title": "{{m}} ",
+        "icon": "success",
+    })
+</script>
+{% endfor %}
+{% endif %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  
+    <div class="card">
+        <h3 style="color: gray; text-align: center;">Operaciones Disponibles </h3>
+        <hr>
+        <table id="OperacionesDisponibles" class="table table-border table-hover;" style="font-size: 14px; text-align: center;">
+            <thead style="background-color:#1a3653; color: white;">
+                
+                <tr>  
+                    <th>Fecha Registro</th>
+                    <th>Referencia</th>
+                    <th>Tipo Operacion</th>
+                    <th>Numero Operaciones</th>
+                    <th>Precio por Operacion</th>
+                    <th>Cantidad Operaciones</th>
+                    <th>Procesado</th>
+                    <th>Faltante</th>
+                   
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for operacion in operaciones %}
+                    <tr>
+                        <td>{{operacion.FechaRegistro}}</td>
+                        <td><a href="{% url 'FormProcesos_Operaciones' operacion.Id %}">{{operacion.Lote.Referencia}}</a></td>
+                        <td>{{operacion.Proceso}}</td>
+                        <td>{{operacion.NumeroOperacionnes}}</td>
+                        <td>$  {{operacion.Precio}}</td>
+                        <td id="tdCantidadOperaciones">{{operacion.CantidadOperaciones}}</td>
+                        <td id="tdTotalProcesados">{{operacion.CantidadProcesada.totalProcesados}}</td>  
+                      <td></td>
+                      {% if user.Perfil.Nombre == 'Administrador' %}
+                        <td>
+                        <a href="{% url 'Form-Detalle-Edicion' operacion.Id %}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'Form-Detalle-Eliminacion' operacion.Id %}" class="btn btn-secondary"><i class="bi bi-trash"></i></a>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                <script src='{% static "js/Operaciones.js" %}'> </script>   
+                <script src='{% static "js/Crear_Proceso_Operacion.js" %}'> </script>                           
+                
+            </tbody>
+        </table>
+    </div>
+
+    
+
+
+</body>
+{% endblock %}
+

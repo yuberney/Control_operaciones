@@ -1,0 +1,40 @@
+{% extends "Control_operacionesApp/base.html" %}
+
+{% block titulo %} Eliminar Operacion {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                <h5 style="background-color:crimson; color:beige; text-align: center;padding: 12px;">Estas seguro de eliminar la Operacion ?</h5>
+                <hr>
+                <form action="{% url 'Eliminar_Operacion' operacion.Id %}" method="POST" class="row g-2 needs-validation">
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{operacion.Id}}" name="Id" id="Id" class="form-control"
+                         required>
+
+                    <div class="col-md-4">
+                        <label style="color: gray;">REFERENCIA</label>
+                        <input type="text" value="{{operacion.Lote}}" name="txReferencia" id="txReferencia"
+                            class="form-control"  required>
+                    </div>
+                    <div class="col-md-4">
+                        <label style="color: gray;">PROCESO</label>
+                        <input type="text" value="{{operacion.Proceso}}" name="txtNombre" id="txtNombre"
+                            class="form-control" >
+                    </div>
+                   
+                    <div class="col-12">
+                        <button class="btn btn-info fw-bold float-end" type="submit">ELIMINAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

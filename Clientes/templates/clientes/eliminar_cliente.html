@@ -1,0 +1,40 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Eliminar Empleado {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">  
+            <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                
+                <h5 style="background-color:crimson; color:beige; text-align: center;padding: 12px;">Estas seguro de eliminar el cliente ?</h5>
+                <form action="{% url 'Eliminar_Cliente' cliente.Id %}" method="POST" class="row g-2 needs-validation">
+                    {% csrf_token %}
+                
+                        <input type="hidden" value="{{cliente.Id}}" name="Id" id="Id" class="form-control" >
+                    
+                    <div class="col-md-4">
+                        <label for="txtIdentificacion" style="color: gray;">Nit Empresa</label>
+                        <input type="number" name="txtNit_Empresa" value="{{cliente.Nit_Empresa}}" id="txtNit_Empresa" class="form-control" >
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label style="color: gray;">Nombre Empresa</label>
+                        <input type="text" name="txtNombre_Empresa" value="{{cliente.Nombre_Empresa}}" id="txNombre_Empresa" class="form-control" required>
+                    </div>
+                   
+                    <div class="col-12">
+                        <button class="btn btn-info fw-bold float-end" type="submit">ELIMINAR</button>
+                    </div>
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+{% endblock %}

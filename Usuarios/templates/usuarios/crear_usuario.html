@@ -1,0 +1,116 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Registro de Usuario {% endblock %}
+
+{% block body %}
+
+{% if messages %}
+{% for m in messages %}
+<script>
+    Swal.fire({
+        "title": "{{m}} ",
+        "icon": "success",
+    })
+</script>
+{% endfor %}
+{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">  
+                <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                     <div class="p-3 mb-2 bg-info bg-gradient fw-bold text-white" style="text-align: center;">REGISTRO DE USUARIOS</div>
+                        <form id="FormEmpleados" action="{% url 'Registrar_Usuario' %}" method="POST" class="row g-2 needs-validation">
+                        {% csrf_token %}
+                  
+                        <div class="col-md-4">
+                            <label for="txtIdentificacion" style="color: gray;">Identificacion</label>
+                            <input type="number" name="txtIdentificacion" id="txtIdentificacion" class="form-control" required="">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="txtTipo_identificacion" style="color: gray;">Tipo Documento</label>
+                            <select type="text" name="txtTipo_identificacion" id="txtTipo_identificacion" class="form-select" required>
+                                <option selected disabled value="">Seleccione...</option>
+                                <option >Cedula de Ciudadania</option>
+                                <option >Tarjeta de Identidad</option>
+                                <option >Pot para extranjeros</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-md-4">
+                            <label style="color: gray;">Nombres</label>
+                            <input type="text" name="txtNombres" id="txtNombres" class="form-control" required>
+                        </div>
+    
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Apellidos</label>
+                            <input type="text" name="txtApellidos" id="txtApellidos" class="form-control" required>
+                        </div>
+                       
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Telefono</label>
+                            <input type="number" name="txtTelefono" id="txtTelefono" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Fecha nacimiento</label>
+                            <input type="date" name="txtFecha_nacimiento" id="txtFecha_nacimiento" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                        
+                            <label style="color: gray;">Cargo</label>
+                        <select type="text" name="txtPerfil" id="txtPerfil" class="form-control" required>
+                            <option selected disabled value="">Seleccione...</option>
+                            {% for perfil in perfiles %}
+                            <option  value="{{perfil.Id}}">{{perfil.Nombre}}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Salario</label>
+                            <input type="text" name="txtSalario" id="txtSalario" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Numero cuenta</label>
+                            <input type="number" name="txtNumero_cuenta" id="txtNumero_cuenta" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Banco</label>
+                            <input type="text" name="txtBanco" id="txtBanco" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Usuario</label>
+                            <input type="text" name="txtUsuario" id="txtUsuario" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <label style="color: gray;">Contraseña</label>
+                            <input type="text" name="txtContraseña" id="txtContraseña" class="form-control" required>
+                        </div>
+                    
+                        <div class="col-12">
+                            <button class="btn btn-info fw-bold float-end" type="submit">REGISTRAR</button>
+                        </div>
+                    
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+      
+</body>
+
+<script src='{% static "js/Usuarios.js" %}'> </script>
+</html>
+
+{% endblock %}
+
+

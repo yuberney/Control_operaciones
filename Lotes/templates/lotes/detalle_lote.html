@@ -1,0 +1,80 @@
+{% extends 'Control_operacionesApp/base.html' %}
+
+{% block titulo %} Lotes {% endblock %}
+
+{% block body %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+    Swal.fire({
+        "title": "{{m}} ",
+        "icon": "success",
+    })
+</script>
+{% endfor %}
+{% endif %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% if user.Perfil.Nombre == 'Administrador' %}
+    <button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+        <a class="nav-link active" href="{% url 'FormLotes' %}">Nuevo Lote <i class="lni lni-layers"></i></a>
+    </button>
+    <button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+        <a class="nav-link active" href="">Pendientes Por Liquidar <i class="bi bi-currency-dollar"></i></a>
+    </button>
+
+    <button class="btn btn-info fw-bold " type="submit" style="margin: 4px;">
+        <a class="nav-link active" href="">Procesos Liquidados <i class="bi bi-currency-dollar"></i></a>
+    </button>
+    {% endif %}
+    <div class="card">
+        <h3 style="color: gray; text-align: center;">Detalle Lote </h3>
+        <hr>
+        <table id="OperacionesDisponibles" class="table table-border table-hover;" style="font-size: 13.7px; text-align: center;">
+            <thead style="background-color:#1a3653; color: white;">
+                <tr>  
+                  
+                    <th>Referencia</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Fecha Salida</th>
+                    <th>Fecha Real Entrega </th>
+                    <th>Usuario Responsable</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for lote in lotes %}
+                
+                    <tr>
+                        <td>{{lote.Referencia}}</td>
+                        <td>{{lote.FechaIngreso}}</td>
+                        <td>{{lote.FechaSalida}}</td>
+                        <td>{{lote.FechaEntregado}}</td>
+                        <td>{{lote.UsuarioResponsable}}</td>
+                    
+                        <td><a href="{% url 'Form-Detalle-Edicion' lote.Id %}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                        <a href="" class="btn btn-secondary"><i class="bi bi-trash"></i></a>
+                      
+                        </td>
+                     
+                    </tr>
+                  
+              {% endfor %}
+                 
+            </tbody>
+        </table>
+    </div>
+
+    <script src='{% static "js/Operaciones.js" %}'> </script>
+    <script src='{% static "css/Operaciones.css" %}'> </script>
+
+</body>
+{% endblock %}
